@@ -1,0 +1,12 @@
+{
+  "name": "snawys_law",
+  "displayName": "Snawy's Law",
+  "description": "Enforces Snawy's answering rules and C++ coding law: one-line replies, named bools in if, RAII, Power of 10, Google C++ Style.",
+  "version": "1.1.0",
+  "author": {
+    "name": "Snawy",
+    "email": "etanss9911@gmail.com"
+  },
+  "license": "MIT",
+  "keywords": ["style", "cpp", "lint", "answering", "power-of-10"]
+}
