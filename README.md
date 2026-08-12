@@ -14,11 +14,38 @@ Claude Code plugin that enforces Snawy's Law.
 ## Install
 
 ```bash
-claude --plugin-dir /mnt/DataVault/tools/snawys_law
+claude --plugin-dir /path/to/snawys_law
 ```
+
+Or as a marketplace, from a clone of this repo:
+
+```
+/plugin marketplace add /path/to/snawys_law
+/plugin install snawys_law@snawys-law
+```
+
+## Windows and Linux
+
+Every hook runs through `hooks/snawys.mjs`, so the only hard requirement is
+`node`, which Claude Code already ships on. The linter needs Python and the
+launcher differs per platform, so `snawys.mjs` probes `py -3`, then `python3`,
+then `python`, and stays silent if none of them exist.
+
+Statusline badge (green when the plugin is live in this session, red when it
+is not), in `settings.json`:
+
+```json
+"statusLine": {
+  "type": "command",
+  "command": "node \"/path/to/snawys_law/hooks/snawys.mjs\" statusline"
+}
+```
+
+Set `SNAWYS_LAW_STATUSLINE=0` to hide it.
 
 ## Check the checker
 
 ```bash
-python3 scripts/snawys_lint.py --self-test
+node hooks/snawys.mjs --self-test
+python3 scripts/snawys_lint.py --self-test   # py -3 on Windows
 ```

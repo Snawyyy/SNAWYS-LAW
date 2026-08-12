@@ -5,7 +5,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "cat \"${CLAUDE_PLUGIN_ROOT}/rules/answering.md\""
+            "command": "node \"${CLAUDE_PLUGIN_ROOT}/hooks/snawys.mjs\" law"
           }
         ]
       }
@@ -15,7 +15,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bash \"${CLAUDE_PLUGIN_ROOT}/hooks/session-start.sh\""
+            "command": "node \"${CLAUDE_PLUGIN_ROOT}/hooks/snawys.mjs\" session-start"
           }
         ]
       }
@@ -25,7 +25,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "cat \"${CLAUDE_PLUGIN_ROOT}/rules/answering.md\" \"${CLAUDE_PLUGIN_ROOT}/skills/snawys-law/SKILL.md\" | jq -Rs '{hookSpecificOutput:{hookEventName:\"SubagentStart\",additionalContext:.}}'"
+            "command": "node \"${CLAUDE_PLUGIN_ROOT}/hooks/snawys.mjs\" subagent"
           }
         ]
       }
@@ -36,7 +36,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "python3 \"${CLAUDE_PLUGIN_ROOT}/scripts/snawys_lint.py\""
+            "command": "node \"${CLAUDE_PLUGIN_ROOT}/hooks/snawys.mjs\" lint"
           }
         ]
       }
