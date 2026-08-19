@@ -1,0 +1,4 @@
+interface:
+  display_name: "Snawy's Law"
+  short_description: "Strict C and C++ design and lint rules"
+  default_prompt: "Use $snawys-law to write or review this C++ code."

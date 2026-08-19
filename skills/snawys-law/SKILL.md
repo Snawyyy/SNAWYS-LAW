@@ -5,9 +5,11 @@ description: Snawy's Law for C and C++ - named bools in if, RAII, modular manage
 
 # Snawy's Law
 
-Binding on all C and C++ code written in this workspace. A `hooks/hooks.json`
-linter checks every file after it is written; these are the same rules, stated
-in full so the code is right the first time.
+Apply these rules to all C and C++ code written, reviewed, or refactored while
+this skill is active. After changing C or C++ files, locate the bundled
+`scripts/snawys_lint.py` relative to this `SKILL.md` and run it with every
+changed C or C++ path. Fix every finding before finishing. The rules below
+also guide issues the linter cannot determine reliably.
 
 ## The first rule
 
@@ -74,4 +76,4 @@ functions with fewer than two assertions, and fancy punctuation (em dash, en das
 character) anywhere in the file.
 
 The rest - naming, `explicit`, const-correctness, ownership, loop bounds,
-checked returns - is on you; the linter cannot see it.
+checked returns - requires manual review because the linter cannot see it.

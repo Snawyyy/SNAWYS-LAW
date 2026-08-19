@@ -1,6 +1,21 @@
 # snawys_law
 
-Claude Code plugin that enforces Snawy's Law.
+Codex skill and Claude Code plugin that enforce Snawy's Law.
+
+## Codex
+
+Install `skills/snawys-law` in the Codex skills directory. Codex loads the
+rules automatically for C and C++ work and runs the bundled linter after
+editing C or C++ files.
+
+```bash
+cp -R skills/snawys-law "${CODEX_HOME:-$HOME/.codex}/skills/snawys-law"
+```
+
+The Codex skill provides agent-level enforcement. The Claude plugin below
+keeps its product-specific prompt and post-edit hooks.
+
+## Claude Code
 
 - `UserPromptSubmit` hook injects the answering rules and the multi-part
   work rule into every turn: a prompt asking for several changes in different
@@ -20,5 +35,5 @@ claude --plugin-dir /mnt/DataVault/tools/snawys_law
 ## Check the checker
 
 ```bash
-python3 scripts/snawys_lint.py --self-test
+python3 skills/snawys-law/scripts/snawys_lint.py --self-test
 ```

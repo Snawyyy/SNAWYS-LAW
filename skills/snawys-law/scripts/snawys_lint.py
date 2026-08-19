@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Snawy's Law linter.
 
-Reads PostToolUse hook JSON on stdin, checks the file that was just written,
-and exits 2 with the findings on stderr so Claude has to fix them.
+Checks paths passed on the command line, or reads Claude PostToolUse hook JSON
+on stdin. Exits 2 with findings so the calling agent has to fix them.
 
 Run `snawys_lint.py --self-test` to check the checker.
 """
@@ -133,25 +133,30 @@ def main():
     if "--self-test" in sys.argv:
         self_test()
         return 0
-    try:
-        event = json.load(sys.stdin)
-    except (json.JSONDecodeError, ValueError):
-        return 0
-    assert isinstance(event, dict), "hook payload must be an object"
-    path = event.get("tool_input", {}).get("file_path", "")
-    if not path.endswith(EXTS):
-        return 0
-    try:
-        with open(path, encoding="utf-8", errors="replace") as handle:
-            lines = handle.readlines()
-    except OSError:
-        return 0
-    findings = check(lines)
-    if not findings:
-        return 0
-    report = "\n".join(f"{path}:{n}: {m}" for n, m in findings[:40])
-    print("Snawy's Law violations - fix them now:\n" + report, file=sys.stderr)
-    return 2
+    paths = sys.argv[1:]
+    if not paths:
+        try:
+            event = json.load(sys.stdin)
+        except (json.JSONDecodeError, ValueError):
+            return 0
+        assert isinstance(event, dict), "hook payload must be an object"
+        paths = [event.get("tool_input", {}).get("file_path", "")]
+    reports = []
+    for path in paths:
+        if not path.endswith(EXTS):
+            continue
+        try:
+            with open(path, encoding="utf-8", errors="replace") as handle:
+                lines = handle.readlines()
+        except OSError as error:
+            reports.append(f"{path}: cannot read file: {error}")
+            continue
+        reports.extend(f"{path}:{n}: {m}" for n, m in check(lines)[:40])
+    if reports:
+        report = "\n".join(reports)
+        print("Snawy's Law violations - fix them now:\n" + report, file=sys.stderr)
+        return 2
+    return 0
 
 
 if __name__ == "__main__":

@@ -36,7 +36,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "python3 \"${CLAUDE_PLUGIN_ROOT}/scripts/snawys_lint.py\""
+            "command": "python3 \"${CLAUDE_PLUGIN_ROOT}/skills/snawys-law/scripts/snawys_lint.py\""
           }
         ]
       }
