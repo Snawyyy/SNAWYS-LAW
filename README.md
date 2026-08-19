@@ -12,6 +12,13 @@ editing C or C++ files.
 cp -R skills/snawys-law "${CODEX_HOME:-$HOME/.codex}/skills/snawys-law"
 ```
 
+Install the general answering and multi-part work rules as always-on Codex
+instructions:
+
+```bash
+cp codex/AGENTS.md "${CODEX_HOME:-$HOME/.codex}/AGENTS.md"
+```
+
 The Codex skill provides agent-level enforcement. The Claude plugin below
 keeps its product-specific prompt and post-edit hooks.
 
