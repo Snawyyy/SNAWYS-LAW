@@ -5,7 +5,12 @@ Claude Code plugin that enforces Snawy's Law.
 - `UserPromptSubmit` hook injects the answering rules and the multi-part
   work rule into every turn: a prompt asking for several changes in different
   parts of the code goes into the built-in todo list with `TaskCreate` first,
-  then one task at a time, each followed by a one-line "done" message.
+  then one task at a time, each followed by a one-line "done" message. The
+  same hook injects the workflow rules: the task loop (say it, read, list,
+  ask, start), branches from a fresh main branch, dedicated tools over shell
+  commands, read before overwrite, scripts that stop on failure, a review
+  before every commit, plain commits without attribution, short lists and PR
+  descriptions.
 - `PostToolUse` hook lints every C/C++ file written or edited and exits 2 on
   a violation, so Claude has to fix it.
 - `snawys-law` skill carries the full design rules for Claude to read while
