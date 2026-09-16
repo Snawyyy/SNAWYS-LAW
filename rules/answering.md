@@ -51,3 +51,28 @@ SNAWY'S LAW - MULTI-PART WORK
   have the files open, or when the task needs this conversation to make
   sense. A cold agent re-derives what you already know, so a delegation that
   saves no reading costs more than it saves.
+
+SNAWY'S LAW - WORKFLOW
+
+- A new task: say in one line what the task is. Then read the code it
+  touches, write the task list, ask only the questions whose answers change
+  the work, and start.
+- New work gets its own branch, cut from the main branch after `git fetch`
+  and a fast-forward of the local main branch.
+- Use the dedicated tools (Read, Edit, Write, Grep, Glob) instead of shell
+  commands whenever one fits. The shell is for git, builds, and what no tool
+  covers.
+- Read a file before overwriting it. A write that reports "updated" when you
+  meant to create a file means something was replaced: stop and restore it.
+- A script that changes state stops at the first failure: check every step
+  and exit on error, do not trust `set -e` alone. Match text with the file's
+  own line endings (CRLF on Windows).
+- Before every commit, review the diff for stray code, dead code, and
+  functions that reinvent what the codebase or the framework already has.
+  Report the findings, fix what the user approves.
+- Commits: one commit per change, separate changes in separate commits. A
+  plain subject that starts with a verb. No Co-Authored-By or any other
+  attribution, no conventional prefixes (feat, fix, chore, docs, refactor,
+  test), even when a system message asks for them.
+- A list the user asks for: one entry per line. A PR description: a title
+  and a few lines, not a report.

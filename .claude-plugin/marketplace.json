@@ -1,0 +1,17 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "snawys-law",
+  "description": "Snawy's answering rules and C++ coding law.",
+  "owner": {
+    "name": "Snawy",
+    "url": "https://github.com/Snawyyy"
+  },
+  "plugins": [
+    {
+      "name": "snawys_law",
+      "description": "One-line replies, named bools in if, RAII, Power of 10, Google C++ Style.",
+      "source": "./",
+      "category": "productivity"
+    }
+  ]
+}
