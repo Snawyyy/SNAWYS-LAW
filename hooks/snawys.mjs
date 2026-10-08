@@ -92,8 +92,16 @@ function readStamp() {
   }
 }
 
+// The injected SKILL.md says "relative to this SKILL.md", but the reader never
+// sees where that file is, so the absolute path is spelled out for them.
+function lintNote() {
+  const script = join(pluginRoot, ...LINT_FILE);
+  return `\nThe linter is at: ${script}\n` +
+    `Run it as: python3 "${script}" <files>  (py -3 on Windows)\n`;
+}
+
 function lawText() {
-  return pluginFile(RULES_FILE) + pluginFile(LAW_FILE);
+  return pluginFile(RULES_FILE) + pluginFile(LAW_FILE) + lintNote();
 }
 
 function runLint(payload) {
@@ -119,6 +127,7 @@ function selfTest() {
   assert.equal(sessionIdFrom('not json'), '');
   assert.equal(sessionIdFrom('{"session_id":42}'), '');
   assert.ok(lawText().length > 0, 'law text is readable');
+  assert.ok(lawText().includes(join(pluginRoot, ...LINT_FILE)), 'lint path');
   console.log('self-test passed');
   return 0;
 }
