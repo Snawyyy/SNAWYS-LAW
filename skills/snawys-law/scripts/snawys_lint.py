@@ -27,7 +27,11 @@ FUNC_OPEN = re.compile(r"^.*\).*\{\s*$")
 # Namespace braces hold functions, they are not one.
 NAMESPACE_OPEN = re.compile(r"^\s*(?:inline\s+)?namespace\b[^;]*\{\s*$")
 NAMESPACE_CLOSE = re.compile(r"^\s*\}\s*//\s*namespace\b")
-ASSERT_CALL = re.compile(r"\b(?:assert|static_assert|CHECK|DCHECK)\s*\(")
+# Qt Test checks count: they are the asserts a test function is meant to have.
+ASSERT_CALL = re.compile(
+    r"\b(?:assert|static_assert|CHECK|DCHECK|QVERIFY2?|QCOMPARE"
+    r"|QTRY_VERIFY2?|QTRY_COMPARE)\s*\("
+)
 
 BANNED = (
     (re.compile(r"\bgoto\b"), "goto: banned, restructure the control flow"),
@@ -140,6 +144,9 @@ def self_test():
     assert any("assertions" in m for _, m in check(nested)), "namespace"
     wrapped = ["namespace a {\n"] + good + ["}  // namespace a\n"]
     assert check(wrapped) == [], check(wrapped)
+    qt = ["void T::Plays() {\n", "  QVERIFY(ok);\n",
+          "  QCOMPARE(a, b);\n", "}\n"]
+    assert check(qt) == [], check(qt)
     long_file = good + ["// filler\n"] * MAX_FILE_LINES
     assert any("file is" in m for _, m in check(long_file)), "file limit"
     print("self-test passed")
