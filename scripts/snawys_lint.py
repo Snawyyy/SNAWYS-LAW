@@ -21,7 +21,12 @@ MIN_ASSERTS = 2
 # macro-heavy code; swap in libclang if the false-positive rate ever bites.
 IF_LINE = re.compile(r"^\s*(?:\}\s*)?(?:else\s+)?if\s*(?:constexpr\s*)?\((.*)\)")
 NAMED_BOOL = re.compile(r"^!?[A-Za-z_][A-Za-z0-9_]*$")
-FUNC_OPEN = re.compile(r"^[A-Za-z_~].*\).*\{\s*$")
+# Outside any body, a line with ")" that opens a brace starts a function;
+# this also catches the last line of a signature split over lines.
+FUNC_OPEN = re.compile(r"^.*\).*\{\s*$")
+# Namespace braces hold functions, they are not one.
+NAMESPACE_OPEN = re.compile(r"^\s*(?:inline\s+)?namespace\b[^;]*\{\s*$")
+NAMESPACE_CLOSE = re.compile(r"^\s*\}\s*//\s*namespace\b")
 ASSERT_CALL = re.compile(r"\b(?:assert|static_assert|CHECK|DCHECK)\s*\(")
 
 BANNED = (
@@ -77,6 +82,11 @@ def check(lines):
             if ASSERT_CALL.search(line):
                 func_asserts += 1
             in_function = depth > 0
+            is_namespace_brace = not in_function and bool(
+                NAMESPACE_OPEN.match(line) or NAMESPACE_CLOSE.match(line)
+            )
+            if is_namespace_brace:
+                continue
             if not in_function and FUNC_OPEN.match(line):
                 func_start = number
                 func_asserts = 0
@@ -124,6 +134,12 @@ def self_test():
         "}\n",
     ]
     assert check(good) == [], check(good)
+    nested = ["namespace a {\n", "\n", "int Bar(int x,\n",
+              "        int y) {\n", "  return x;\n", "}\n", "\n",
+              "}  // namespace a\n"]
+    assert any("assertions" in m for _, m in check(nested)), "namespace"
+    wrapped = ["namespace a {\n"] + good + ["}  // namespace a\n"]
+    assert check(wrapped) == [], check(wrapped)
     long_file = good + ["// filler\n"] * MAX_FILE_LINES
     assert any("file is" in m for _, m in check(long_file)), "file limit"
     print("self-test passed")
