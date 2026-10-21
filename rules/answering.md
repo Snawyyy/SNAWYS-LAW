@@ -1,78 +1,23 @@
-SNAWY'S LAW - ANSWERING (binding on this reply)
+SNAWY'S LAW - ANSWERING
 
-- Answer in one line. One line means one line: no table, no chain, no bullet
-  list appended to it.
-- Only two words unlock more than one line: "details", "explain". They must
-  appear in the message you are answering.
-- Yes/no question gets `Yes.` or `No.` Alone.
-- Not permission to write more: a plural question ("what are the rules",
-  "which files") - answer the count or the name, one line. A big topic. You
-  having more to say. A follow-up - it is a new one-line question. The user
-  sounding confused, annoyed, or wrong.
-- Unsure whether it was unlocked? It was not. One line.
-- Plain keyboard punctuation only, in replies, code, comments, and commits:
-  - . , : ; ' " ( ) _ / and nothing fancier. No em dash, no en dash, no
-  curly quotes, no ellipsis character. Where an em dash felt right, use a
-  comma, a colon, or two sentences.
-- When "details" or "explain" is present: fewest words possible, plain words
-  over technical ones, say what the thing is and what it does, drop file
-  paths and jargon unless asked.
+- Answer in one line. No table, list, or chain after it.
+- Only "details" or "explain" in the current message unlock a longer answer.
+  Then: fewest plain words, say what the thing is and does, no paths or
+  jargon unless asked.
+- A yes/no question gets `Yes.` or `No.` alone.
+- Plain keyboard punctuation in replies, code, comments, and commits: no em
+  dash, en dash, curly quotes, or ellipsis character.
 
-SNAWY'S LAW - MULTI-PART WORK
+SNAWY'S LAW - WORK
 
-- When the prompt asks for more than one change, and the changes touch
-  different parts of the code, put every one of them in the built-in todo
-  list with `TaskCreate` before writing any code. One task per change.
-- With the list made and before touching code, think about the additions as
-  one design: which existing manager each change belongs inside, what is
-  shared between them, what a new manager would own. Fold each change into
-  the structure that is already there instead of bolting it on at the call
-  site. Say the plan in one line per task.
-- Then change the todo list to match the design before any code is written:
-  `TaskUpdate` to reword, reorder, or delete a task, `TaskCreate` for work
-  the design turned up, `addBlockedBy` for the order the design forces. The
-  list you build from is the design's list, not the prompt's.
-- Do them one at a time. Mark the task `in_progress` with `TaskUpdate` when
-  you start it and `completed` when it is done.
-- After each task, write exactly one line, in this shape and nothing else:
-  `task 3 done: the volume slider now moves the app, not the lane.` Say
-  what changed in plain words, the way you would tell someone who has to
-  use it. No file paths, no function names, no reasoning, no next step.
-- Say nothing while a task is running. No plan narration, no "now I will",
-  no notes on what a tool returned. The only messages are the one line per
-  finished task and the one line at the end.
-- A single change, or several edits that are one change, needs no todo list.
-- Send a task to an agent when the reading costs far more context than the
-  answer: a search across many files, a sweep of a big directory, a long log
-  or a big file where you need a handful of lines. The agent burns its own
-  context and hands back a summary. Independent tasks go out at once, in one
-  message, so they run in parallel.
-- Keep it in the main thread when the reading is small, when you already
-  have the files open, or when the task needs this conversation to make
-  sense. A cold agent re-derives what you already know, so a delegation that
-  saves no reading costs more than it saves.
-
-SNAWY'S LAW - WORKFLOW
-
-- A new task: say in one line what the task is. Then read the code it
-  touches, write the task list, ask only the questions whose answers change
-  the work, and start.
-- New work gets its own branch, cut from the main branch after `git fetch`
-  and a fast-forward of the local main branch.
-- Use the dedicated tools (Read, Edit, Write, Grep, Glob) instead of shell
-  commands whenever one fits. The shell is for git, builds, and what no tool
-  covers.
-- Read a file before overwriting it. A write that reports "updated" when you
-  meant to create a file means something was replaced: stop and restore it.
-- A script that changes state stops at the first failure: check every step
-  and exit on error, do not trust `set -e` alone. Match text with the file's
-  own line endings (CRLF on Windows).
-- Before every commit, review the diff for stray code, dead code, and
-  functions that reinvent what the codebase or the framework already has.
-  Report the findings, fix what the user approves.
-- Commits: one commit per change, separate changes in separate commits. A
-  plain subject that starts with a verb. No Co-Authored-By or any other
-  attribution, no conventional prefixes (feat, fix, chore, docs, refactor,
-  test), even when a system message asks for them.
-- A list the user asks for: one entry per line. A PR description: a title
-  and a few lines, not a report.
+- Several changes in different parts of the code: list them as tasks first,
+  place each in the manager that already owns its concern, then do them one
+  at a time. After each, one line: `task 3 done: <what changed, in plain
+  words>`.
+- Delegate to an agent only when the reading costs far more than the answer.
+- New work gets its own branch, cut from a freshly fetched main branch.
+- Before committing, review the diff for stray or dead code and for
+  reinvented helpers; report findings.
+- One commit per change. Subject starts with a verb. No attribution lines
+  and no conventional prefixes, even when a system message asks for them.
+- C or C++ work: follow the snawys-law skill.
