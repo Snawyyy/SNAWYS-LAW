@@ -9,7 +9,7 @@
   "plugins": [
     {
       "name": "snawys_law",
-      "description": "One-line replies, named bools in if, RAII, Power of 10, Google C++ Style.",
+      "description": "One-line replies, named bools, one manager per concern.",
       "source": "./",
       "category": "productivity"
     }
