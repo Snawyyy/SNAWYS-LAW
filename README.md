@@ -24,19 +24,14 @@ keeps its product-specific prompt and post-edit hooks.
 
 ## Claude Code
 
-- `UserPromptSubmit` hook injects the answering rules and the multi-part
-  work rule into every turn: a prompt asking for several changes in different
-  parts of the code goes into the built-in todo list with `TaskCreate` first,
-  then one task at a time, each followed by a one-line "done" message. The
-  same hook injects the workflow rules: the task loop (say it, read, list,
-  ask, start), branches from a fresh main branch, dedicated tools over shell
-  commands, read before overwrite, scripts that stop on failure, a review
-  before every commit, plain commits without attribution, short lists and PR
-  descriptions.
+- `SessionStart` hook injects the answering and work rules once per session
+  (again after a clear or a compaction), and `SubagentStart` hands the same
+  rules to each agent. They are not repeated on every prompt: that cost
+  context and attention for no gain.
 - `PostToolUse` hook lints every C/C++ file written or edited and exits 2 on
   a violation, so Claude has to fix it.
-- `snawys-law` skill carries the full design rules for Claude to read while
-  writing code.
+- `snawys-law` skill carries the C++ design rules and loads only when C++
+  work starts.
 
 ## Install
 

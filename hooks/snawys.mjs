@@ -7,7 +7,7 @@
 // differs per platform, so it is probed instead of assumed.
 //
 //   node snawys.mjs law           print the answering rules
-//   node snawys.mjs session-start stamp the session flag, print rules + law
+//   node snawys.mjs session-start stamp the session flag, print the rules
 //   node snawys.mjs subagent      same text, wrapped for SubagentStart
 //   node snawys.mjs lint          hand the PostToolUse payload to the linter
 //   node snawys.mjs statusline    print the badge
@@ -34,7 +34,6 @@ const WINDOWS_COMMAND_NOT_FOUND = 9009;
 const PYTHON_CANDIDATES = [['py', '-3'], ['python3'], ['python']];
 const FLAG_NAME = '.snawys-law-active';
 const RULES_FILE = ['rules', 'answering.md'];
-const LAW_FILE = ['skills', 'snawys-law', 'SKILL.md'];
 // The linter lives inside the skill so the Codex package ships self-contained.
 const LINT_FILE = ['skills', 'snawys-law', 'scripts', 'snawys_lint.py'];
 
@@ -100,8 +99,10 @@ function lintNote() {
     `Run it as: python3 "${script}" <files>  (py -3 on Windows)\n`;
 }
 
+// The C++ law loads with the skill when C++ work starts, so a session that
+// never touches C++ does not carry it.
 function lawText() {
-  return pluginFile(RULES_FILE) + pluginFile(LAW_FILE) + lintNote();
+  return pluginFile(RULES_FILE) + lintNote();
 }
 
 function runLint(payload) {
