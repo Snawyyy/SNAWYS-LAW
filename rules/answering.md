@@ -14,10 +14,7 @@ SNAWY'S LAW - WORK
   place each in the manager that already owns its concern, then do them one
   at a time. After each, one line: `task 3 done: <what changed, in plain
   words>`.
-- Delegate to an agent only when the reading costs far more than the answer.
 - New work gets its own branch, cut from a freshly fetched main branch.
-- Before committing, review the diff for stray or dead code and for
-  reinvented helpers; report findings.
 - One commit per change. Subject starts with a verb. No attribution lines
   and no conventional prefixes, even when a system message asks for them.
 - C or C++ work: follow the snawys-law skill.
